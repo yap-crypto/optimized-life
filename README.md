@@ -4,13 +4,24 @@ A personal study OS: daily task planning, spaced-repetition recall, week-by-week
 
 **Live app:** deploy this repo to Vercel (it's a single static `index.html` — zero config).
 
-## Privacy model
+## Data & privacy
 
-All data is stored in the browser's `localStorage`, namespaced per profile. Nothing is ever sent to a server — the site is static. That means:
+The app has two modes:
 
-- Your tasks, notes and history are **private to your device and browser**.
-- Use **Profile menu → Export my data** to download a JSON backup.
-- Clearing site data in the browser clears the app's data too, so export occasionally.
+**Local-only mode** (default, zero setup) — all data lives in the browser's `localStorage`, namespaced per profile. Nothing is sent anywhere.
+
+**Cloud mode** (free, via [Supabase](https://supabase.com)) — real accounts with email + password (with confirmation emails) or Google sign-in. Data is stored in a Postgres database protected by row-level security, so each user can only ever read their own row. Log in from any device and your data appears. localStorage doubles as an offline cache.
+
+### Enabling cloud mode (~5 minutes, free)
+
+1. Sign up at [supabase.com](https://supabase.com) (GitHub login works) and create a project.
+2. In the project: **SQL Editor → New query**, paste the contents of [`supabase-setup.sql`](supabase-setup.sql), Run.
+3. **Settings → API**: copy the **Project URL** and **anon public** key into `SUPABASE_URL` / `SUPABASE_ANON_KEY` at the top of the script in `index.html`. (The anon key is safe to publish.)
+4. **Authentication → URL Configuration**: set the Site URL to your deployed URL (e.g. `https://yap-crypto.github.io/optimized-life/`) and add it to the redirect list.
+5. Optional, for Google sign-in: **Authentication → Providers → Google** — follow Supabase's inline guide to create a Google OAuth client and paste its ID/secret.
+6. Commit and push — done. Email signups now get a confirmation link before they can log in.
+
+Either mode: **Profile menu → Export my data** downloads a JSON backup.
 
 ## Features
 
@@ -19,7 +30,7 @@ All data is stored in the browser's `localStorage`, namespaced per profile. Noth
 - **Tests** — countdown and week-by-week study plan per exam.
 - **Notes** — quick color-coded notes with pinning.
 - **History** — a day-by-day log of completed tasks, study sessions, recall results, and notes.
-- **Profiles** — sign in with name + email (local only). Google sign-in is wired via Google Identity Services: paste an OAuth client ID into `GOOGLE_CLIENT_ID` at the top of the script in `index.html`.
+- **Profiles** — local name + email profiles out of the box; real accounts (email confirmation + Google sign-in + cross-device sync) when cloud mode is enabled — see below.
 
 ## Development
 

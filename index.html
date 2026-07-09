@@ -885,8 +885,8 @@
 // 3. Paste Project URL + anon public key from Settings → API below.
 // The anon key is safe to publish; row-level security keeps each user's data private.
 // Leave both empty to run in local-only mode (no accounts, data stays on the device).
-const SUPABASE_URL = '';
-const SUPABASE_ANON_KEY = '';
+const SUPABASE_URL = 'https://vbbqrcwuvwzxrejuuszd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZiYnFyY3d1dnd6eHJlanV1c3pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM1NzEyOTUsImV4cCI6MjA5OTE0NzI5NX0.7WwCBLkvaectMHjR8s5bsSvSZoBy1lXXkCTa9f_HcL4';
 const cloud = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase)
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
